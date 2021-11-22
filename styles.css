@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: aqua;
+    text-align: center;
+}
+
+.main_notes{
+    position: absolute;
+    z-index: 100;
+    top: 3rem;
+    right: 3rem;
+}
+.main_notes ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    flex-direction: row;
+    color: white;
+}
+.main_notes ul li{
+    cursor: pointer;
+    border-radius: 5px;
+    background: green;
+    padding: 1rem;
+}
+.main_notes ul li:hover{
+    background: #46a903;
+    border-radius: 5px;
+}
