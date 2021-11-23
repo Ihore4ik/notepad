@@ -25,8 +25,12 @@ function createNewNote(text = '') {
            <i class="fas fa-check-circle save"
              onclick="onSave()"
            ></i>
+           <input type="text" class="inp" placeholder="My Note">
             <i class="fas fa-trash-alt delete"
-               onclick="onDelete()"
+
+            ></i>
+            <i class="fas fa-times"
+              onclick="onClose()"
             ></i>
     </div>
     <div class="text">
@@ -36,6 +40,34 @@ function createNewNote(text = '') {
 
     document.body.append(newNote);
     toggleNoteEdit();
+    editNoteName();
+}
+
+
+function editNoteName() {
+    const notes = document.querySelectorAll('.note');
+    notes.forEach(note => {
+        note.addEventListener(`click`, (event) => {
+            if (event.target.classList.contains("inp")) {
+                event.target.style.backgroundColor = '#3ec80b';
+            }
+        });
+    });
+    notes.forEach(note => {
+        note.addEventListener(`focusout`, (event) => {
+            if (event.target.classList.contains("inp")) {
+                event.target.style.backgroundColor = '#9EC862';
+            }
+        });
+    });
+//when click twice on textarea - can edit it
+//     notes.forEach(note => {
+//         note.addEventListener(`dblclick`, (event) => {
+//             if (event.target.tagName === 'TEXTAREA') {
+//                 event.target.removeAttribute('disabled');
+//             }
+//         });
+//     });
 }
 function toggleNoteEdit() {
     const notes = document.querySelectorAll('.note');
@@ -55,9 +87,9 @@ function toggleNoteEdit() {
         });
     });
 }
-function deleteNote(event) {
+function closeNote(event) {
     event.target.parentNode.parentNode.remove();
-    this.removeEventListener('click', deleteNote);
+    this.removeEventListener('click', closeNote);
 
 }
 function saveNoteToLocalStorage(event) {
@@ -76,8 +108,8 @@ function saveNoteToLocalStorage(event) {
 function onSave() {
     this.addEventListener('click', saveNoteToLocalStorage);
 }
-function onDelete() {
-    this.addEventListener('click', deleteNote);
+function onClose() {
+    this.addEventListener('click', closeNote);
 }
 
 

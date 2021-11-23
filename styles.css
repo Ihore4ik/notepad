@@ -63,6 +63,20 @@ body{
 .note .tools i:hover{
     color: #ddebff;
 }
+input.inp{
+    height: 100%;
+    background: inherit;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    max-width: 45%;
+    padding-left: 0.3rem;
+}
+input.inp::placeholder{
+
+    color: #fff;
+}
 .note .text {
     width: 100%;
     height: 90%;
