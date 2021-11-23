@@ -6,6 +6,8 @@
 body{
     background: aqua;
     text-align: center;
+    display: flex;
+    flex-wrap: wrap;
 }
 /*==========================add button=============================*/
 .main_notes{

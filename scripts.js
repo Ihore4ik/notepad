@@ -14,31 +14,29 @@ function createMenuNotes() {
 }
 
 createMenuNotes();
-
 const addNewNote = document.querySelectorAll('.main_notes>ul>li')[0];
 const myNotes = document.querySelectorAll('.main_notes>ul>li')[1];
 
-addNewNote.addEventListener('click', function () {
+function createNewNote(text = '') {
     const newNote = document.createElement('div');
     newNote.classList.add('note');
     newNote.innerHTML = `
     <div class="tools">
            <i class="fas fa-check-circle save"
-             onclick=""
+             onclick="onSave()"
            ></i>
             <i class="fas fa-trash-alt delete"
-               onclick="del()"
+               onclick="onDelete()"
             ></i>
     </div>
     <div class="text">
-        <textarea></textarea>
+        <textarea>${text}</textarea>
     </div>
-`
+`;
+
     document.body.append(newNote);
     toggleNoteEdit();
-});
-
-
+}
 function toggleNoteEdit() {
     const notes = document.querySelectorAll('.note');
     notes.forEach(note => {
@@ -48,7 +46,7 @@ function toggleNoteEdit() {
             }
         });
     });
-
+//when click twice on textarea - can edit it
     notes.forEach(note => {
         note.addEventListener(`dblclick`, (event) => {
             if (event.target.tagName === 'TEXTAREA') {
@@ -57,16 +55,54 @@ function toggleNoteEdit() {
         });
     });
 }
-
-function del() {
-    this.addEventListener('click', deleteNote);
-}
-
 function deleteNote(event) {
     event.target.parentNode.parentNode.remove();
     this.removeEventListener('click', deleteNote);
 
 }
+function saveNoteToLocalStorage(event) {
+    const text = event.target.parentNode.parentNode.querySelector('textarea');
+    if (text.value.trim() !== "") {
+        let data = [];
+        if (localStorage.getItem('myNotes')) {
+            data = JSON.parse(localStorage.getItem('myNotes'));
+        }
+        let sendData = JSON.stringify([...data, text.value]);
+        localStorage.setItem('myNotes', sendData);
+    }
+    this.removeEventListener('click', saveNoteToLocalStorage);
+
+}
+function onSave() {
+    this.addEventListener('click', saveNoteToLocalStorage);
+}
+function onDelete() {
+    this.addEventListener('click', deleteNote);
+}
+
+
+addNewNote.addEventListener('click', ()=>{
+    createNewNote()
+});
+myNotes.addEventListener('click', function () {
+
+    if (localStorage.getItem('myNotes')) {
+        let data = JSON.parse(localStorage.getItem('myNotes'));
+        data.map(note => createNewNote(note))
+    }else{
+        alert("You haven't notes yet!")
+    }
+});
+
+
+
+
+
+
+
+
+
+
 
 
 
